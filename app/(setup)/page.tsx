@@ -1,3 +1,4 @@
+import { InitialModal } from "@/components/modals/InitialModal"
 import { redirect } from "next/navigation"
 import { initUser } from "@/lib/initUser"
 import { db } from "@/lib/prisma"
@@ -18,7 +19,7 @@ export default async function SetupPage() {
 
     return (
         <>
-
+           <InitialModal /> 
         </>
     )
 }
