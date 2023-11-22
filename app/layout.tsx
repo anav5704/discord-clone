@@ -1,5 +1,6 @@
-import { ClerkProvider } from '@clerk/nextjs'
+import { ModalProvider } from '@/providers/ModalProvider'
 import { ThemeProvider } from '@/providers/ThemeProvider'
+import { ClerkProvider } from '@clerk/nextjs'
 import { Open_Sans } from 'next/font/google'
 import type { Metadata } from 'next'
 import { cn } from '@/lib/utils'
@@ -21,12 +22,13 @@ export default function RootLayout({
         <ClerkProvider>
             <html lang="en" suppressContentEditableWarning>
                 <body className={cn(font.className, "bg-white dark:bg-[#313338]")}>
-                    <ThemeProvider 
-                        attribute='class' 
-                        defaultTheme='dark' 
-                        enableSystem 
+                    <ThemeProvider
+                        attribute='class'
+                        defaultTheme='dark'
+                        enableSystem
                         storageKey='discord-theme'
-                     >
+                    >
+                        <ModalProvider />
                         {children}
                     </ThemeProvider>
                 </body>
