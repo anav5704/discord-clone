@@ -23,7 +23,7 @@ export const MembersModal = () => {
     const roleIconMap = {
         "GUEST": null,
         "MODERATOR": <ShieldCheck className="h-4 w-4 ml-2 text-indigo-500" />,
-        "ADMIN": <ShieldAlert className="w-4 h-4 text-rose-50" />
+        "ADMIN": <ShieldAlert className="w-4 h-4 text-rose-500" />
     }
 
     const onKick = async (memberId: string) => {
@@ -78,7 +78,7 @@ export const MembersModal = () => {
                         {server?.members?.map((member) => (
                             <div key={member.id} className="flex items-center gap-x-2 mb-6">
                                 <UserAvatar src={member.profile.imageUrl} />
-                                <div className="flex flex-col gap-y-1">
+                                <div className="flex flex-col gap-y-1 items-start">
                                     <div className="text-xs font-semibold flex items-center gap-x-1">
                                         {member.profile.name}
                                         {roleIconMap[member.role]}
@@ -102,12 +102,12 @@ export const MembersModal = () => {
                                                             <DropdownMenuItem onClick={() => onRoleChange(member.id, "GUEST")}>
                                                                 <Shield className="h-4 w-4 mr-2" />
                                                                 Guest
-                                                                {member.role === "GUEST" && <Check className="ml-auto h-4 w-4" />}
+                                                                {member.role === "GUEST" && <Check className="ml-2 h-4 w-4" />}
                                                             </DropdownMenuItem>
                                                             <DropdownMenuItem onClick={() => onRoleChange(member.id, "MODERATOR")}>
-                                                                <Shield className="h-4 w-4 mr-2" />
+                                                                <ShieldCheck className="h-4 w-4 mr-2" />
                                                                 Moderator
-                                                                {member.role === "MODERATOR" && <ShieldCheck className="ml-auto h-4 w-4" />}
+                                                                {member.role === "MODERATOR" && <Check className="ml-2 h-4 w-4" />}
                                                             </DropdownMenuItem>
                                                         </DropdownMenuSubContent>
                                                     </DropdownMenuPortal>
@@ -122,7 +122,7 @@ export const MembersModal = () => {
                                     </div>
                                 )}
                                 {loadingId === member.id && (
-                                    <Loader2 className="animate-ping text-zinc-500 ml-auto h-4 w-4" />
+                                    <Loader2 className="animate-spin text-zinc-500 ml-auto h-4 w-4" />
                                 )}
                             </div>
                         ))}
