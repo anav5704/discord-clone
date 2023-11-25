@@ -54,13 +54,13 @@ export const ServerHeader = ({ server, role }: ServerHeaderProps) => {
                     <DropdownMenuSeparator className="dark:bg-[#2b2d31] bg-[#f2f3f5]" />
                 )}
                 {isAdmin && (
-                    <DropdownMenuItem className="text-rose-500 dark:text-rose-500 px-3 py-2 text-sm cursor-pointer">
+                    <DropdownMenuItem onClick={() => onOpen("deleteServer", { server })} className="text-rose-500 dark:text-rose-500 px-3 py-2 text-sm cursor-pointer">
                         Delete Server
                         <Trash className="ml-auto h-4 w-4" />
                     </DropdownMenuItem>
                 )}
                 {!isAdmin && (
-                    <DropdownMenuItem className="text-rose-500 dark:text-rose-500 px-3 py-2 text-sm cursor-pointer">
+                    <DropdownMenuItem onClick={() => onOpen("leaveServer", { server })} className="text-rose-500 dark:text-rose-500 px-3 py-2 text-sm cursor-pointer">
                         Leave Server
                         <LogOut className="ml-auto h-4 w-4" />
                     </DropdownMenuItem>
