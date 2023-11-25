@@ -13,12 +13,14 @@ import { useForm } from "react-hook-form"
 import qs from "query-string"
 import axios from "axios"
 import * as z from "zod"
+import { useEffect } from "react"
 
 export const CreateChannelModal = () => {
     const router = useRouter()
     const params = useParams()
-    const { isOpen, onClose, type } = useModal()
+    const { isOpen, onClose, type, data } = useModal()
     const isModalOpen = isOpen && type === "createChannel"
+    const { channelType } = data
 
     const formSchema = z.object({
         name: z.string().min(1, { message: "Channel name is required." }).refine(name => name !== "General", { message: "Channel cannot be general" }),
@@ -29,9 +31,17 @@ export const CreateChannelModal = () => {
         resolver: zodResolver(formSchema),
         defaultValues: {
             name: "",
-            type: ChannelType.TEXT,
+            type: channelType || ChannelType.TEXT,
         }
     })
+
+    useEffect(() => {
+        if (channelType) {
+            form.setValue("type", channelType)
+        } else {
+            form.setValue("type", ChannelType.TEXT)
+        }
+    }, [channelType, form])
 
     const isLoading = form.formState.isSubmitting
     const handleSubmit = async (values: z.infer<typeof formSchema>) => {
