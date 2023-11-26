@@ -105,7 +105,6 @@ export const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
                         }
                     ]} />
                 </div>
-                <Separator />
                 {!!textChannels?.length && (
                     <div className="mb-2">
                         <ServerSection
@@ -177,7 +176,6 @@ export const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
                         ))}
                     </div>
                 )}
-
             </ScrollArea>
         </div>
     )
