@@ -6,9 +6,10 @@ This is a fullstack Discord clone which basically has all the features of Discor
 - Next JS 14
 - Shadcn UI
 - TailwindCSS
-- Clerk Discord auth
+- Clerk  Auth
 - Prisma ORM
 - Serverless PostgreSQL
+- Socket IO
 - Zustand
 - Zod
 ```
