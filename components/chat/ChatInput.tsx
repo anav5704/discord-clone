@@ -1,10 +1,12 @@
 "use client"
 
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form"
+import { EmojiPicker } from "@/components/EmojiPicker"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Input } from "@/components/ui/input"
+import { useRouter } from "next/navigation"
 import { useModal } from "@/hooks/useModal"
-import { Plus, Smile } from "lucide-react"
+import { Plus } from "lucide-react"
 import { useForm } from "react-hook-form"
 import qs from "query-string"
 import axios from "axios"
@@ -22,6 +24,7 @@ const formSChema = z.object({
 })
 
 export const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
+    const router = useRouter()
     const { onOpen } = useModal()
     const form = useForm<z.infer<typeof formSChema>>({
         defaultValues: {
@@ -38,6 +41,8 @@ export const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
                 query
             })
             await axios.post(url, value)
+            form.reset()
+            router.refresh()
         } catch (error) {
             console.log(error)
         }
@@ -58,11 +63,11 @@ export const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
                                     </button>
                                     <Input {...field} placeholder={`Message ${type === "conversation" ? name : "#" + name}`} disabled={isLoading} className="px-14 py-6 bg-zinc-200/90 dark:bg-zinc-700/75 border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200" />
                                     <div className="absolute top-7 right-8">
-                                        <Smile />
+                                        <EmojiPicker onChange={(emoji: string) => field.onChange(`${field.value} ${emoji}`)} />
                                     </div>
                                 </div>
                             </FormControl>
-                        </FormItem>
+                        </FormItem> 
                     )}
                 />
             </form>
