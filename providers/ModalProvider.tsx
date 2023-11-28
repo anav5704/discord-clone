@@ -1,10 +1,11 @@
 "use client"
 
-import { EditChannelModal } from "@/components/modals/EditChannelModal copy"
 import { CreateChannelModal } from "@/components/modals/CreateChannelModal"
 import { DeleteChannelModal } from "@/components/modals/DeleteChannelModal"
 import { CreateServerModal } from "@/components/modals/CreateServerModal"
 import { DeleteServerModal } from "@/components/modals/DeleteServerModal"
+import { MessageFileModal } from "@/components/modals/MessageFileModal"
+import { EditChannelModal } from "@/components/modals/EditChannelModal"
 import { LeaveServerModal } from "@/components/modals/LeaveServerModal"
 import { EditServerModal } from "@/components/modals/EditServerModal"
 import { MembersModal } from "@/components/modals/MembersModal"
@@ -31,6 +32,7 @@ export const ModalProvider = () => {
             <DeleteServerModal />
             <DeleteChannelModal />
             <EditChannelModal />
+            <MessageFileModal />
         </>
     )
 }
