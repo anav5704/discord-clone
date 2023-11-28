@@ -1,6 +1,7 @@
 import { SocketProvider } from '@/providers/SocketProvider'
 import { ModalProvider } from '@/providers/ModalProvider'
 import { ThemeProvider } from '@/providers/ThemeProvider'
+import { QueryProvider } from '@/providers/QueryProvider'
 import { ClerkProvider } from '@clerk/nextjs'
 import { Open_Sans } from 'next/font/google'
 import type { Metadata } from 'next'
@@ -31,7 +32,9 @@ export default function RootLayout({
                     >
                         <SocketProvider>
                             <ModalProvider />
-                            {children}
+                            <QueryProvider>
+                                {children}
+                            </QueryProvider>
                         </SocketProvider>
                     </ThemeProvider>
                 </body>
