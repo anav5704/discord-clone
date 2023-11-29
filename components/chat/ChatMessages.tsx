@@ -6,6 +6,10 @@ import { Member, Message, Profile } from "@prisma/client"
 import { Loader2, ServerCrash } from "lucide-react"
 import { Fragment } from "react"
 import { Gruppo } from "next/font/google"
+import { ChatItem } from "./ChatItem"
+import { format } from "date-fns"
+
+const DATE_FORMAT = "d MMM yyy, HH:mm"
 
 type MessaageWithMemberWithProfile = Message & {
     member: Member & {
@@ -60,9 +64,19 @@ export const ChatMessages = ({ name, member, chatId, apiUrl, socketUrl, socketQu
                 {data?.pages?.map((group: any, i) => (
                     <Fragment key={i}>
                         {group.items.map((message: MessaageWithMemberWithProfile) => (
-                            <div key={message.id}>
-                                {message.content}
-                            </div>
+                            <ChatItem
+                                key={message.id}
+                                currentMember={member}
+                                member={message.member}
+                                id={message.id}
+                                content={message.content}
+                                fileUrl={message.fileUrl}
+                                deleted={message.deleted}
+                                timeStamp={format(new Date(message.createdAt), DATE_FORMAT)}
+                                isUpdated={message.createdAt !== message.updatedAt}
+                                socketUrl={socketUrl}
+                                socketQuery={socketQuery}
+                            />
                         ))}
                     </Fragment>
                 ))}
