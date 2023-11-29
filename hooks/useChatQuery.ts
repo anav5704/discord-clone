@@ -22,7 +22,8 @@ export const useChatQuery = ({ queryKey, apiUrl, paramKey, paramValue }: ChatQue
         }, { skipNull: true })
 
         const response = await fetch(url)
-        return response.json()
+        const data = await response.json()
+        return data
     }
 
     const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } = useInfiniteQuery({

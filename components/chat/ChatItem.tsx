@@ -3,6 +3,7 @@
 import { Edit, FileIcon, ShieldAlert, ShieldCheck, Trash } from "lucide-react"
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form"
 import { Member, MemberRole, Profile } from "@prisma/client"
+import { useParams, useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { ActionTooltip } from "../ui/ActionTooltip"
 import { Button } from "@/components/ui/button"
@@ -33,7 +34,6 @@ interface ChatItemProps {
     member: Member & {
         profile: Profile
     },
-    timeStamp: string,
     fileUrl: string | null,
     deleted: boolean,
     currentMember: Member,
@@ -42,7 +42,10 @@ interface ChatItemProps {
     socketQuery: Record<string, string>
 }
 
-export const ChatItem = ({ id, content, member, timeStamp, fileUrl, deleted, currentMember, isUpdated, socketQuery, socketUrl }: ChatItemProps) => {
+export const ChatItem = ({ id, content, member, fileUrl, deleted, currentMember, isUpdated, socketQuery, socketUrl }: ChatItemProps) => {
+    const router = useRouter()
+    const params = useParams()
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -51,7 +54,7 @@ export const ChatItem = ({ id, content, member, timeStamp, fileUrl, deleted, cur
     })
 
     const isLoading = form.formState.isSubmitting
-
+ 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
             const url = qs.stringifyUrl({
@@ -64,6 +67,13 @@ export const ChatItem = ({ id, content, member, timeStamp, fileUrl, deleted, cur
         } catch (error) {
             console.log(error)
         }
+    }
+
+    const memberClick = () => {
+        if (member.id === currentMember?.id) {
+            return
+        }
+        router.push(`/servers/${params?.serverId}/conversations/${member?.id}`)
     }
 
     useEffect(() => {
@@ -90,7 +100,7 @@ export const ChatItem = ({ id, content, member, timeStamp, fileUrl, deleted, cur
 
     const isAdmin = currentMember.role === MemberRole.ADMIN
     const isModerator = currentMember.role === MemberRole.MODERATOR
-    const isOwner = currentMember.id === member.id
+    const isOwner = currentMember.id === member?.id
     const canDeleteMessage = !deleted && (isAdmin || isModerator || isOwner)
     const canEditMessage = !deleted && isOwner && !fileUrl
     const isPDF = fileType === "pdf" && fileUrl
@@ -99,18 +109,17 @@ export const ChatItem = ({ id, content, member, timeStamp, fileUrl, deleted, cur
     return (
         <div className="relative group flex items-center hover:bg-black/5 p-4 transition w-full">
             <div className="group flex gap-x-2 items-start w-full">
-                <div className="cursor-pointer hover:drop-shadow-md transition">
-                    <UserAvatar src={member.profile.imageUrl} />
+                <div onClick={memberClick} className="cursor-pointer hover:drop-shadow-md transition">
+                    <UserAvatar src={member?.profile?.imageUrl} />
                 </div>
                 <div className="flex flex-col w-full">
                     <div className="flex items-center gap-x-2">
                         <div className="flex items-center">
-                            <p className="font-semibold text-sm hover:underline cursor-pointer">{member.profile.name}</p>
+                            <p onClick={memberClick} className="font-semibold text-sm hover:underline cursor-pointer">{member.profile.name}</p>
                             <ActionTooltip label={member.role}>
                                 {roleIconMap[member.role]}
                             </ActionTooltip>
                         </div>
-                        <span className="text-xs text-zinc-500">{timeStamp}</span>
                     </div>
                     {isImage && (
                         <a href={fileUrl} target="_blank" rel="noopener noreferrer" className="relative aspect-square rounded-md mt-2 overflow-hidden border flex items-center bg-secondary w-48 h-48">
