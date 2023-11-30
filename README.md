@@ -10,6 +10,7 @@ This is a fullstack Discord clone which basically has all the features of Discor
 - Prisma ORM
 - Serverless PostgreSQL
 - Socket IO
+- LiveKit
 - Zustand
 - Zod
 ```
