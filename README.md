@@ -2,7 +2,7 @@
 
 ![hero](https://github.com/anav5704/discord-clone/blob/main/docs/discord-clone.png)
 
-This is a simple, fullstack Discord clone which basically has all the features of Discord other than nitro. This includes real-time text, audio and video calls, file uploads, admin and moderator roles and the creation and management of servers and channels. Real-time is made possible with socket IO and has polling as the fallback. 
+This is a simple, fullstack Discord clone that has all the features of Discord other than Nitro. This includes real-time text, audio and video calls, file uploads, admin and moderator roles, and the creation and management of servers and channels. Real-time is made possible with socket IO and has polling as the fallback. 
 
 ## Technologies Used
 - Next JS 13
